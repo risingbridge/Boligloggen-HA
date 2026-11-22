@@ -6,7 +6,7 @@ blueprint:
     Sender et varsel når et gjøremål snart er aktuelt, har forfalt, eller er
     utført av noen andre i husstanden.
   domain: automation
-  source_url: https://github.com/boligloggen/boligloggen-ha/blob/main/blueprints/automation/boligloggen/notify_due.yaml
+  source_url: http://gitea.internal/hrisebro/Boligloggen-HomeAssistant/raw/branch/main/blueprints/automation/boligloggen/notify_due.yaml
   input:
     property:
       name: Bolig / Property
