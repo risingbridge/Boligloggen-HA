@@ -73,7 +73,8 @@ A fixed date of 29 February falls on 28 February in non-leap years.
 
 ## Entities
 
-All entities belong to one *service* device per property.
+All entities belong to one *service* device per property. For full attribute details and
+dashboard recipes, see [`docs/entities-and-dashboards.md`](docs/entities-and-dashboards.md).
 
 | Entity | State | Notes |
 |---|---|---|
