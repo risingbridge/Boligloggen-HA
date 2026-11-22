@@ -15,7 +15,10 @@ const LOG_PAGE = 50;
 
 const I18N = {
   en: {
-    tabs: { plan: "Plan", add: "Add tasks", archived: "Removed", history: "History" },
+    tabs: {
+      plan: "Plan", add: "Add tasks", archived: "Removed", history: "History",
+      transfer: "Export / import",
+    },
     category: {
       safety: "Safety", indoor: "Indoor", wet_room: "Wet room", heating: "Heating",
       ventilation: "Ventilation", exterior: "Exterior", outdoor: "Outdoor",
@@ -82,9 +85,43 @@ const I18N = {
     save: "Save",
     create: "Add",
     loading: "Loading…",
+    export_title: "Export",
+    export_help: (n) =>
+      `Downloads the whole plan for «${n}» as a JSON file: property details, all tasks (including removed ones) and the full history. Keep it as a backup, or import it in another Home Assistant.`,
+    export_btn: "Download JSON",
+    exported: "Plan exported",
+    import_title: "Import",
+    import_help: (n) =>
+      `Replaces the plan for «${n}» with an exported file. Use it to restore a backup or to move a plan from another Home Assistant.`,
+    import_choose: "Export file (.json)",
+    s_file: "File",
+    s_property: "Property",
+    s_exported: "Exported",
+    s_tasks: "Tasks",
+    s_history: "History",
+    tasks_count: (n, a) => `${n} (${a} active)`,
+    entries: (n) => (n === 1 ? "1 completion" : `${n} completions`),
+    include_history: "Include history (replaces the current history)",
+    import_warning: (n) =>
+      `This replaces the property details and all tasks of «${n}». Sensors and buttons for tasks that aren't in the file are removed. Tasks that are in the file keep their entity IDs when you restore a backup of the same property.`,
+    import_btn: "Import",
+    confirm_import: (n) =>
+      `Replace the plan for «${n}» with the file? This can't be undone, so export first if you want to keep the current plan.`,
+    imported: (n) => `Imported ${n} tasks`,
+    import_errors: {
+      invalid_json: "The file isn't valid JSON.",
+      too_large: "The file is too large (max 3.5 MB).",
+      not_boligloggen_file: "This isn't a Boligloggen export file.",
+      unsupported_version:
+        "The file was made by a newer version of Boligloggen. Update the integration and try again.",
+      invalid_content: "The file is damaged or has been edited incorrectly.",
+    },
   },
   nb: {
-    tabs: { plan: "Plan", add: "Legg til", archived: "Fjernet", history: "Historikk" },
+    tabs: {
+      plan: "Plan", add: "Legg til", archived: "Fjernet", history: "Historikk",
+      transfer: "Eksport / import",
+    },
     category: {
       safety: "Sikkerhet", indoor: "Innendørs", wet_room: "Våtrom", heating: "Oppvarming",
       ventilation: "Ventilasjon", exterior: "Utvendig", outdoor: "Uteområde",
@@ -151,6 +188,37 @@ const I18N = {
     save: "Lagre",
     create: "Legg til",
     loading: "Laster…",
+    export_title: "Eksporter",
+    export_help: (n) =>
+      `Laster ned hele planen for «${n}» som en JSON-fil: boligdetaljer, alle gjøremål (også fjernede) og hele historikken. Ta vare på den som sikkerhetskopi, eller importer den i en annen Home Assistant.`,
+    export_btn: "Last ned JSON",
+    exported: "Planen er eksportert",
+    import_title: "Importer",
+    import_help: (n) =>
+      `Erstatter planen for «${n}» med en eksportert fil. Bruk det til å gjenopprette en sikkerhetskopi eller flytte en plan fra en annen Home Assistant.`,
+    import_choose: "Eksportfil (.json)",
+    s_file: "Fil",
+    s_property: "Bolig",
+    s_exported: "Eksportert",
+    s_tasks: "Gjøremål",
+    s_history: "Historikk",
+    tasks_count: (n, a) => `${n} (${a} aktive)`,
+    entries: (n) => (n === 1 ? "1 fullføring" : `${n} fullføringer`),
+    include_history: "Ta med historikk (erstatter nåværende historikk)",
+    import_warning: (n) =>
+      `Dette erstatter boligdetaljene og alle gjøremålene for «${n}». Sensorer og knapper for gjøremål som ikke er i filen, fjernes. Gjøremål som er i filen, beholder entitets-ID-ene når du gjenoppretter en sikkerhetskopi av samme bolig.`,
+    import_btn: "Importer",
+    confirm_import: (n) =>
+      `Erstatte planen for «${n}» med filen? Dette kan ikke angres, så eksporter først hvis du vil beholde den nåværende planen.`,
+    imported: (n) => `Importerte ${n} gjøremål`,
+    import_errors: {
+      invalid_json: "Filen er ikke gyldig JSON.",
+      too_large: "Filen er for stor (maks 3,5 MB).",
+      not_boligloggen_file: "Dette er ikke en eksportfil fra Boligloggen.",
+      unsupported_version:
+        "Filen er laget av en nyere versjon av Boligloggen. Oppdater integrasjonen og prøv igjen.",
+      invalid_content: "Filen er skadet eller feil redigert.",
+    },
   },
 };
 
@@ -250,6 +318,7 @@ const STYLE = `
   .empty { padding: 24px; text-align: center; color: var(--secondary-text-color); }
   .log { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; }
   .log .d { color: var(--secondary-text-color); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .summary { margin: 4px 0 8px; }
   .log .note { color: var(--secondary-text-color); font-style: italic; }
   dialog {
     border: 0; border-radius: 16px; padding: 0; width: min(560px, calc(100vw - 32px));
@@ -554,6 +623,7 @@ class BoligloggenPanel extends HTMLElement {
       this._s.entryId = ev.target.value;
       this._s.selected.clear();
       this._s.log = [];
+      this._s.import = null;
       try {
         localStorage.setItem("boligloggen-panel-entry", ev.target.value);
       } catch (_e) {
@@ -615,9 +685,14 @@ class BoligloggenPanel extends HTMLElement {
         add: () => this._renderAdd(),
         archived: () => this._renderArchived(),
         history: () => this._renderHistory(),
+        transfer: () => this._renderTransfer(),
       }[this._s.tab]();
     }
+    // Keep the chosen file visible: re-use the existing file input across renders.
+    const fileInput = this._s.import ? root.getElementById("import-file") : null;
     main.innerHTML = html;
+    const fresh = root.getElementById("import-file");
+    if (fileInput && fresh) fresh.replaceWith(fileInput);
     if (focused === "filter") {
       const input = root.getElementById("filter");
       input.focus();
@@ -754,6 +829,139 @@ class BoligloggenPanel extends HTMLElement {
       .join("");
   }
 
+  _currentName() {
+    return this._s.properties.find((p) => p.config_entry_id === this._s.entryId)?.name ?? "";
+  }
+
+  _renderTransfer() {
+    const t = this._t;
+    const name = this._currentName();
+    const imp = this._s.import;
+    let preview = "";
+    if (imp?.error) {
+      preview = `<div class="error">${esc(imp.error)}</div>`;
+    } else if (imp?.summary) {
+      const s = imp.summary;
+      preview = `
+        <div class="log summary">
+          <div class="d">${esc(t.s_file)}</div><div>${esc(imp.fileName)}</div>
+          <div class="d">${esc(t.s_property)}</div><div>${esc(s.name)}</div>
+          <div class="d">${esc(t.s_exported)}</div><div>${esc(s.exported)}</div>
+          <div class="d">${esc(t.s_tasks)}</div><div>${esc(t.tasks_count(s.tasks, s.active))}</div>
+          <div class="d">${esc(t.s_history)}</div><div>${esc(t.entries(s.log))}</div>
+        </div>
+        <label class="check"><input type="checkbox" id="import-history" ${
+          imp.includeHistory ? "checked" : ""
+        }> ${esc(t.include_history)}</label>
+        <div class="help">${esc(t.import_warning(name))}</div>
+        ${imp.serverError ? `<div class="error" style="margin-top: 8px">${esc(imp.serverError)}</div>` : ""}`;
+    }
+    return `
+      <section class="card">
+        <h2>${esc(t.export_title)}</h2>
+        <div class="help">${esc(t.export_help(name))}</div>
+        <div class="bar" style="margin: 12px 0 0">
+          <button class="btn primary" data-action="export" ${this._s.busy ? "disabled" : ""}>
+            ${esc(t.export_btn)}</button>
+        </div>
+      </section>
+      <section class="card">
+        <h2>${esc(t.import_title)}</h2>
+        <div class="help">${esc(t.import_help(name))}</div>
+        <label class="field" style="margin: 12px 0">
+          <span>${esc(t.import_choose)}</span>
+          <input type="file" id="import-file" accept="application/json,.json">
+        </label>
+        ${preview}
+        <div class="bar" style="margin: 12px 0 0">
+          <button class="btn danger" data-action="import" ${
+            imp?.summary && !this._s.busy ? "" : "disabled"
+          }>${esc(t.import_btn)}</button>
+        </div>
+      </section>`;
+  }
+
+  /** Read and pre-check a chosen file in the browser; the server validates again. */
+  async _readImportFile(file) {
+    const errors = this._t.import_errors;
+    const state = { fileName: file.name, includeHistory: this._s.import?.includeHistory ?? true };
+    try {
+      if (file.size > 3.5 * 1024 * 1024) throw new Error(errors.too_large);
+      let data;
+      try {
+        data = JSON.parse(await file.text());
+      } catch (_e) {
+        throw new Error(errors.invalid_json);
+      }
+      if (data?.format !== "boligloggen-export" || typeof data.property !== "object") {
+        throw new Error(errors.not_boligloggen_file);
+      }
+      const prop = data.property;
+      const tasks = Array.isArray(prop.tasks) ? prop.tasks : [];
+      state.data = data;
+      state.summary = {
+        name: prop.profile?.name ?? "?",
+        exported: data.exported_at ? this._date(data.exported_at) : "?",
+        tasks: tasks.length,
+        active: tasks.filter((x) => (x?.status ?? "active") === "active").length,
+        log: Array.isArray(prop.log) ? prop.log.length : 0,
+      };
+    } catch (err) {
+      state.error = err.message;
+    }
+    this._s.import = state;
+    this._render();
+  }
+
+  async _export() {
+    const result = await this._ws({ type: `${DOMAIN}/export`, config_entry_id: this._s.entryId });
+    const slug =
+      (result.property?.profile?.name || "plan")
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/æ/g, "ae")
+        .replace(/ø/g, "o")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "plan";
+    const day = (result.exported_at || new Date().toISOString()).slice(0, 10);
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(result, null, 2)], { type: "application/json" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `boligloggen-${slug}-${day}.json`;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    this._toast(this._t.exported);
+  }
+
+  async _import() {
+    const t = this._t;
+    const imp = this._s.import;
+    if (!imp?.data) return;
+    if (!(await this._confirm(t.confirm_import(this._currentName()), t.import_btn, true))) return;
+    try {
+      const result = await this._ws({
+        type: `${DOMAIN}/import`,
+        config_entry_id: this._s.entryId,
+        data: imp.data,
+        include_history: imp.includeHistory,
+      });
+      this._s.import = null;
+      this._toast(t.imported(result.tasks));
+      await this._refresh();
+    } catch (err) {
+      // Shown in the import card, next to the file it's about.
+      const known = t.import_errors[err?.code];
+      const detail = err?.message && err.message !== err.code ? ` (${err.message})` : "";
+      imp.serverError = known ? `${known}${detail}` : await this._errorText(err);
+    }
+  }
+
   _renderHistory() {
     const t = this._t;
     if (!this._s.log.length) return `<div class="card empty">${esc(t.no_history)}</div>`;
@@ -791,6 +999,14 @@ class BoligloggenPanel extends HTMLElement {
 
   async _onChange(ev) {
     const el = ev.target;
+    if (el.id === "import-file") {
+      if (el.files?.[0]) await this._readImportFile(el.files[0]);
+      return;
+    }
+    if (el.id === "import-history") {
+      if (this._s.import) this._s.import.includeHistory = el.checked;
+      return;
+    }
     if (el.id === "show-all") {
       this._s.showAll = el.checked;
       await this._withBusy(() => this._loadCatalog());
@@ -858,6 +1074,12 @@ class BoligloggenPanel extends HTMLElement {
         });
         break;
       }
+      case "export":
+        await this._withBusy(() => this._export());
+        break;
+      case "import":
+        await this._withBusy(() => this._import());
+        break;
       case "more-log":
         await this._withBusy(() => this._loadLog(true));
         break;

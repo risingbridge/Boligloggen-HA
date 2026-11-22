@@ -9,13 +9,20 @@ import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.components.websocket_api.connection import ActiveConnection
 from homeassistant.components.websocket_api.const import ERR_INVALID_FORMAT, ERR_NOT_FOUND
-from homeassistant.components.websocket_api.decorators import require_admin, websocket_command
+from homeassistant.components.websocket_api.decorators import (
+    async_response,
+    require_admin,
+    websocket_command,
+)
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.loader import async_get_integration
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN, KIND_BUTTON, KIND_SENSOR
 from .planner import describe_schedule, localized, suggest, task_status
 from .planner.models import CATEGORIES
+from .planner.transfer import TransferError, build_export, parse_export
 
 if TYPE_CHECKING:
     from .coordinator import BoligloggenCoordinator
@@ -31,6 +38,8 @@ def async_setup_websocket(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, ws_year_plan)
     websocket_api.async_register_command(hass, ws_log)
     websocket_api.async_register_command(hass, ws_catalog)
+    websocket_api.async_register_command(hass, ws_export)
+    websocket_api.async_register_command(hass, ws_import)
 
 
 def _get(
@@ -190,4 +199,61 @@ def ws_catalog(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str,
             }
             for s in candidates
         ],
+    )
+
+
+@websocket_command(
+    {vol.Required("type"): "boligloggen/export", vol.Required("config_entry_id"): str}
+)
+@require_admin
+@async_response
+async def ws_export(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """The whole property (profile, tasks, log) as an export document. Admin only."""
+    if (coordinator := _get(hass, connection, msg)) is None:
+        return
+    integration = await async_get_integration(hass, DOMAIN)
+    connection.send_result(
+        msg["id"],
+        build_export(
+            coordinator.data_to_save(),
+            exported_at=dt_util.utcnow().isoformat(),
+            integration_version=str(integration.version or ""),
+        ),
+    )
+
+
+@websocket_command(
+    {
+        vol.Required("type"): "boligloggen/import",
+        vol.Required("config_entry_id"): str,
+        vol.Required("data"): dict,
+        vol.Optional("include_history", default=True): bool,
+    }
+)
+@require_admin
+@callback
+def ws_import(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Replace the property's plan with an export document. Admin only.
+
+    The document is validated completely first; on error nothing changes and the
+    error code is ``not_boligloggen_file``, ``unsupported_version`` or
+    ``invalid_content`` (message = where).
+    """
+    if (coordinator := _get(hass, connection, msg)) is None:
+        return
+    try:
+        snapshot = parse_export(msg["data"])
+    except TransferError as err:
+        connection.send_error(msg["id"], err.key, err.detail or err.key)
+        return
+    coordinator.async_import(snapshot, include_history=msg["include_history"])
+    connection.send_result(
+        msg["id"],
+        {
+            "name": coordinator.profile.name,
+            "tasks": len(coordinator.tasks),
+            "active_tasks": len(coordinator.active_tasks),
+            "log_entries": len(coordinator.log),
+            "history_imported": msg["include_history"],
+        },
     )

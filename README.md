@@ -48,7 +48,7 @@ It is included in the diagnostics download.
 ### Boligloggen panel
 
 Admins get a **Boligloggen** entry in the sidebar. It is hidden from other users. The panel
-has four tabs:
+has five tabs:
 
 - **Plan**: every task grouped by category, with its status, schedule, next due date and who
   last did it. From here you can **edit** a task (title, description, category, schedule,
@@ -58,6 +58,14 @@ has four tabs:
   add them in one go, or create a **custom task** with its own schedule.
 - **Removed**: restore tasks that were removed earlier.
 - **History**: every completion, newest first, with who did it and any note.
+- **Export / import**: download the whole property (details, all tasks including removed
+  ones, and the full history) as a JSON file, or replace the plan with such a file. The file
+  is checked completely before anything changes, and you see a summary first. Untick
+  *include history* to keep the current history. Restoring a backup of the same property keeps
+  entity IDs, so dashboards and automations keep working. Home Assistant's own backups already
+  include Boligloggen's data; export is for moving a plan or keeping a copy you can read.
+  The file can be edited by hand and imported again; see
+  [`docs/export-format.md`](docs/export-format.md) for every field and the rules.
 
 *Edit property details* opens the integration page, where *Configure → Edit property details*
 re-runs the property questions. The panel works on phones and in the companion app, and
@@ -191,6 +199,11 @@ Read-only, and requires an authenticated connection:
 - `boligloggen/catalog` `{config_entry_id, show_all?}` (**admins only**) → catalog tasks not
   in the plan yet: `[{key, template_id, title, description, category, schedule,
   schedule_text, matches}]`. Pass `key` as `template_id` to `boligloggen.add_task`.
+- `boligloggen/export` `{config_entry_id}` (**admins only**) → an export document
+  `{format: "boligloggen-export", format_version, exported_at, integration_version, property}`.
+- `boligloggen/import` `{config_entry_id, data, include_history?}` (**admins only**) → replaces
+  the property's plan with an export document. Errors: `not_boligloggen_file`,
+  `unsupported_version`, `invalid_content` (the message says where); nothing is changed on error.
 
 ## Development
 

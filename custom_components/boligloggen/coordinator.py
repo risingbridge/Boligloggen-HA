@@ -53,6 +53,7 @@ from .planner import (
     undo_completion,
 )
 from .planner.seeding import expand_template
+from .planner.transfer import PlanSnapshot
 from .store import BoligloggenStore, empty_feedback
 
 if TYPE_CHECKING:
@@ -465,6 +466,39 @@ class BoligloggenCoordinator:
         if profile.name != old_name:
             self._rename_device(profile.name)
         self._changed()
+
+    @callback
+    def async_import(self, snapshot: PlanSnapshot, *, include_history: bool) -> None:
+        """Replace profile and tasks (and optionally the log) with an import.
+
+        Imported task ids are kept, so importing a backup into the same property
+        keeps entity IDs, dashboards and automations working. Due-state is synced
+        without firing events, like after an edit. Without ``include_history`` the
+        current log is kept as it is.
+        """
+        today = self.today()
+        old_active = {t.id for t in self.active_tasks}
+        old_name = self.profile.name
+        self.profile = snapshot.profile
+        if snapshot.language:
+            self.language = snapshot.language
+        self.tasks = {
+            t.id: self._with_current_state(t, today) if t.is_active else t for t in snapshot.tasks
+        }
+        if include_history:
+            self.log = list(snapshot.log)
+        self.feedback = {k: list(v) for k, v in snapshot.feedback.items()} or empty_feedback()
+        self._remove_entities(old_active - {t.id for t in self.active_tasks})
+        if self.profile.name != old_name:
+            self._rename_device(self.profile.name)
+        self._changed()
+        _LOGGER.info(
+            "Imported %d tasks (%d active)%s into %s",
+            len(self.tasks),
+            len(self.active_tasks),
+            f" and {len(self.log)} log entries" if include_history else "",
+            self.profile.name,
+        )
 
     def _rename_device(self, name: str) -> None:
         device_registry = dr.async_get(self.hass)
