@@ -25,12 +25,14 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Register services and websocket commands once for the integration."""
+    """Register services, websocket commands and the admin panel once."""
+    from .panel import async_setup_panel
     from .services import async_setup_services
     from .websocket import async_setup_websocket
 
     async_setup_services(hass)
     async_setup_websocket(hass)
+    await async_setup_panel(hass)
     return True
 
 

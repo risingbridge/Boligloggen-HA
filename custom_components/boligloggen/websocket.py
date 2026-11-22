@@ -1,4 +1,4 @@
-"""Read-only websocket API for the future årshjul card."""
+"""Read-only websocket API for custom cards and the admin panel."""
 
 from __future__ import annotations
 
@@ -9,12 +9,13 @@ import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.components.websocket_api.connection import ActiveConnection
 from homeassistant.components.websocket_api.const import ERR_INVALID_FORMAT, ERR_NOT_FOUND
-from homeassistant.components.websocket_api.decorators import websocket_command
+from homeassistant.components.websocket_api.decorators import require_admin, websocket_command
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant, callback
 
 from .const import DOMAIN, KIND_BUTTON, KIND_SENSOR
-from .planner import describe_schedule, task_status
+from .planner import describe_schedule, localized, suggest, task_status
+from .planner.models import CATEGORIES
 
 if TYPE_CHECKING:
     from .coordinator import BoligloggenCoordinator
@@ -29,6 +30,7 @@ def async_setup_websocket(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, ws_tasks)
     websocket_api.async_register_command(hass, ws_year_plan)
     websocket_api.async_register_command(hass, ws_log)
+    websocket_api.async_register_command(hass, ws_catalog)
 
 
 def _get(
@@ -143,4 +145,49 @@ def ws_log(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any
             "entries": [{**e.to_dict(), "title": titles.get(e.task_id)} for e in page],
             "next_before": page[-1].id if len(entries) > len(page) else None,
         },
+    )
+
+
+@websocket_command(
+    {
+        vol.Required("type"): "boligloggen/catalog",
+        vol.Required("config_entry_id"): str,
+        vol.Optional("show_all", default=False): bool,
+    }
+)
+@require_admin
+@callback
+def ws_catalog(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Catalog templates not yet in the plan (active or archived). Admin only.
+
+    By default only templates matching the property profile; ``show_all`` adds the
+    rest, flagged with ``matches: false``. Pass ``key`` as ``template_id`` to
+    ``boligloggen.add_task``.
+    """
+    if (coordinator := _get(hass, connection, msg)) is None:
+        return
+    lang = coordinator.language
+    matching = {
+        s.key for s in suggest(coordinator.catalog, coordinator.profile, coordinator.today())
+    }
+    candidates = coordinator.matched_suggestions(show_all=msg["show_all"])
+    candidates.sort(key=lambda s: (CATEGORIES.index(s.template.category), s.title(lang)))
+    connection.send_result(
+        msg["id"],
+        [
+            {
+                "key": s.key,
+                "template_id": s.template.id,
+                "instance": s.instance,
+                "title": s.title(lang),
+                "description": localized(s.template.description, lang)
+                if s.template.description
+                else "",
+                "category": s.template.category,
+                "schedule": s.template.schedule.to_dict(),
+                "schedule_text": describe_schedule(s.template.schedule, lang),
+                "matches": s.key in matching,
+            }
+            for s in candidates
+        ],
     )

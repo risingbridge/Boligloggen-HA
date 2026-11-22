@@ -2,7 +2,10 @@
   "domain": "boligloggen",
   "name": "Boligloggen",
   "after_dependencies": [
-    "logbook"
+    "frontend",
+    "http",
+    "logbook",
+    "panel_custom"
   ],
   "codeowners": [
     "@risingbridge"
@@ -16,5 +19,5 @@
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/risingbridge/Boligloggen-HA/issues",
   "requirements": [],
-  "version": "0.1.0"
+  "version": "0.2.0"
 }

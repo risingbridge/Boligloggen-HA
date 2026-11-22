@@ -45,7 +45,28 @@ It is included in the diagnostics download.
 
 ## Editing the plan (admins)
 
-*Settings → Devices & services → Boligloggen → Configure* opens a menu:
+### Boligloggen panel
+
+Admins get a **Boligloggen** entry in the sidebar. It is hidden from other users. The panel
+has four tabs:
+
+- **Plan**: every task grouped by category, with its status, schedule, next due date and who
+  last did it. From here you can **edit** a task (title, description, category, schedule,
+  warning days, *last done*, next due date), **undo** its latest completion, or **remove** it.
+  A filter box narrows the list.
+- **Add tasks**: tick catalog tasks that match the property (or *show the whole catalog*) and
+  add them in one go, or create a **custom task** with its own schedule.
+- **Removed**: restore tasks that were removed earlier.
+- **History**: every completion, newest first, with who did it and any note.
+
+*Edit property details* opens the integration page, where *Configure → Edit property details*
+re-runs the property questions. The panel works on phones and in the companion app, and
+follows the user's language (nb/en) and theme. It uses the same services as automations, so
+the same validation and admin checks apply.
+
+### Integration options
+
+*Settings → Devices & services → Boligloggen → Configure* opens a menu with the same actions:
 
 - **Legg til fra katalog / Add from catalog**: matching templates not in the plan yet. Tick
   *show all* to list the whole catalog.
@@ -167,6 +188,9 @@ Read-only, and requires an authenticated connection:
   `done | missed | upcoming | due_soon | overdue`
 - `boligloggen/log` `{config_entry_id, limit?, before?, task_id?}` → `{entries, next_before}`,
   newest first. Pass `next_before` back as `before` to get the next page.
+- `boligloggen/catalog` `{config_entry_id, show_all?}` (**admins only**) → catalog tasks not
+  in the plan yet: `[{key, template_id, title, description, category, schedule,
+  schedule_text, matches}]`. Pass `key` as `template_id` to `boligloggen.add_task`.
 
 ## Development
 
