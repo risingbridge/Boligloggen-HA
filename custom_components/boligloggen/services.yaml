@@ -1,0 +1,175 @@
+complete_task:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: boligloggen
+          domain: [sensor, button]
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: boligloggen
+    task_id:
+      selector:
+        text:
+    note:
+      selector:
+        text:
+          multiline: true
+    completed_on:
+      selector:
+        date:
+    force:
+      default: false
+      selector:
+        boolean:
+
+undo_completion:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: boligloggen
+          domain: [sensor, button]
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: boligloggen
+    task_id:
+      selector:
+        text:
+
+add_task:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: boligloggen
+    template_id:
+      selector:
+        text:
+    title:
+      selector:
+        text:
+    description:
+      selector:
+        text:
+          multiline: true
+    category:
+      selector:
+        select:
+          translation_key: category
+          options: [safety, indoor, wet_room, heating, ventilation, exterior, outdoor, cabin, seasonal]
+    schedule_type:
+      selector:
+        select:
+          translation_key: schedule_type
+          options: [interval, fixed]
+    every:
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+    unit:
+      selector:
+        select:
+          translation_key: unit
+          options: [months, years]
+    dates:
+      example: "04-01, 10-01"
+      selector:
+        text:
+    due_soon_days:
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
+
+update_task:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: boligloggen
+          domain: [sensor, button]
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: boligloggen
+    task_id:
+      selector:
+        text:
+    title:
+      selector:
+        text:
+    description:
+      selector:
+        text:
+          multiline: true
+    category:
+      selector:
+        select:
+          translation_key: category
+          options: [safety, indoor, wet_room, heating, ventilation, exterior, outdoor, cabin, seasonal]
+    schedule_type:
+      selector:
+        select:
+          translation_key: schedule_type
+          options: [interval, fixed]
+    every:
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+    unit:
+      selector:
+        select:
+          translation_key: unit
+          options: [months, years]
+    dates:
+      example: "04-01, 10-01"
+      selector:
+        text:
+    due_soon_days:
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
+    last_completed:
+      selector:
+        date:
+    next_due:
+      selector:
+        date:
+
+remove_task:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: boligloggen
+          domain: [sensor, button]
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: boligloggen
+    task_id:
+      selector:
+        text:
+
+restore_task:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: boligloggen
+    task_id:
+      required: true
+      selector:
+        text:

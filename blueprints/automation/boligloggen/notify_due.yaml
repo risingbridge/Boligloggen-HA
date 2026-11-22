@@ -1,0 +1,98 @@
+blueprint:
+  name: Boligloggen – varsle om gjøremål / notify about tasks
+  description: >-
+    Send a notification when a Boligloggen task becomes due soon, becomes
+    overdue, or is completed by someone else in the household.
+    Sender et varsel når et gjøremål snart er aktuelt, har forfalt, eller er
+    utført av noen andre i husstanden.
+  domain: automation
+  source_url: https://github.com/boligloggen/boligloggen-ha/blob/main/blueprints/automation/boligloggen/notify_due.yaml
+  input:
+    property:
+      name: Bolig / Property
+      selector:
+        config_entry:
+          integration: boligloggen
+    notify_action:
+      name: Varseltjeneste / Notify action
+      description: "For example notify.mobile_app_my_phone or notify.notify"
+      default: notify.notify
+      selector:
+        text:
+    send_due_soon:
+      name: Snart aktuelt / Due soon
+      default: true
+      selector:
+        boolean:
+    send_overdue:
+      name: Forfalt / Overdue
+      default: true
+      selector:
+        boolean:
+    send_completed:
+      name: Utført av andre / Completed by someone else
+      default: false
+      selector:
+        boolean:
+    recipient:
+      name: Mottaker / Recipient
+      description: >-
+        The person receiving the notifications. Completions made by this
+        person are not sent to them.
+      default: ""
+      selector:
+        entity:
+          filter:
+            - domain: person
+
+mode: queued
+max: 20
+
+variables:
+  property_id: !input property
+  notify_action: !input notify_action
+  send_due_soon: !input send_due_soon
+  send_overdue: !input send_overdue
+  send_completed: !input send_completed
+  recipient: !input recipient
+  recipient_user_id: "{{ state_attr(recipient, 'user_id') if recipient else none }}"
+
+triggers:
+  - trigger: event
+    event_type: boligloggen_task_due_soon
+    event_data:
+      config_entry_id: !input property
+    id: due_soon
+  - trigger: event
+    event_type: boligloggen_task_overdue
+    event_data:
+      config_entry_id: !input property
+    id: overdue
+  - trigger: event
+    event_type: boligloggen_task_completed
+    event_data:
+      config_entry_id: !input property
+    id: completed
+
+conditions:
+  - condition: template
+    value_template: >-
+      {{ (trigger.id == 'due_soon' and send_due_soon)
+         or (trigger.id == 'overdue' and send_overdue)
+         or (trigger.id == 'completed' and send_completed
+             and (recipient_user_id is none
+                  or trigger.event.data.user_id != recipient_user_id)) }}
+
+actions:
+  - action: "{{ notify_action }}"
+    data:
+      title: "{{ trigger.event.data.property_name }}"
+      message: >-
+        {% set d = trigger.event.data %}
+        {% if trigger.id == 'due_soon' %}
+          «{{ d.title }}» er snart aktuelt (frist {{ d.next_due }}).
+        {% elif trigger.id == 'overdue' %}
+          «{{ d.title }}» har forfalt (frist {{ d.next_due }}).
+        {% else %}
+          {{ d.user_name }} fullførte «{{ d.title }}»{% if d.note %}: {{ d.note }}{% endif %}.
+        {% endif %}

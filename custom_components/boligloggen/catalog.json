@@ -1,0 +1,539 @@
+{
+  "$schema": "./catalog.schema.json",
+  "version": 1,
+  "templates": [
+    {
+      "id": "smoke_alarm_check",
+      "category": "safety",
+      "title": { "nb": "Test røykvarslere og bytt batteri", "en": "Test smoke alarms and replace battery" },
+      "description": {
+        "nb": "Trykk på testknappen på alle røykvarslere. Bytt batteri på røykvarslerdagen 1. desember, og bytt varslere som er eldre enn 10 år.",
+        "en": "Press the test button on every smoke alarm. Replace batteries on 1 December and replace alarms older than 10 years."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 12, "day": 1 }] },
+      "due_soon_days": 14,
+      "include": {}
+    },
+    {
+      "id": "fire_extinguisher_check",
+      "category": "safety",
+      "title": { "nb": "Kontroller brannslukker og brannteppe", "en": "Check fire extinguisher and fire blanket" },
+      "description": {
+        "nb": "Sjekk at manometeret står på grønt, at plomben er hel og at slukkeren er lett tilgjengelig. Pulverapparat bør vendes noen ganger.",
+        "en": "Check the gauge is in the green, the seal is intact and the extinguisher is easy to reach. Turn powder extinguishers upside down a few times."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 12, "day": 1 }] },
+      "due_soon_days": 14,
+      "include": {}
+    },
+    {
+      "id": "rcd_test",
+      "category": "safety",
+      "title": { "nb": "Test jordfeilbryter", "en": "Test the residual current device (RCD)" },
+      "description": {
+        "nb": "Trykk på testknappen på jordfeilbryteren i sikringsskapet. Den skal slå ut. Slå den på igjen etterpå.",
+        "en": "Press the test button on the RCD in the fuse box. It should trip. Switch it back on afterwards."
+      },
+      "schedule": { "type": "interval", "every": 6, "unit": "months" },
+      "include": {}
+    },
+    {
+      "id": "water_leak_check",
+      "category": "safety",
+      "title": { "nb": "Sjekk for vannlekkasjer og test stoppekran", "en": "Check for water leaks and test the main stopcock" },
+      "description": {
+        "nb": "Se etter fukt under vasker, rundt bereder og ved rørgjennomføringer. Steng og åpne stoppekranen så den ikke setter seg fast.",
+        "en": "Look for damp under sinks, around the water heater and at pipe penetrations. Close and reopen the stopcock so it doesn't seize."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": {}
+    },
+    {
+      "id": "clean_drains",
+      "category": "wet_room",
+      "title": { "nb": "Rens sluk", "en": "Clean floor drain" },
+      "description": {
+        "nb": "Ta ut risten og vannlåsen, fjern hår og slam og skyll godt. Et rent sluk hindrer lukt og vannskader.",
+        "en": "Remove the grate and trap, clear hair and sludge and rinse well. A clean drain prevents odour and water damage."
+      },
+      "schedule": { "type": "interval", "every": 3, "unit": "months" },
+      "per_bathroom": true,
+      "include": {}
+    },
+    {
+      "id": "wet_room_sealant_check",
+      "category": "wet_room",
+      "title": { "nb": "Sjekk fuger og silikon i våtrom", "en": "Check grout and sealant in wet room" },
+      "description": {
+        "nb": "Se etter sprekker, misfarging og løse fuger rundt dusj, badekar, servant og sluk. Skift silikon som har sluppet.",
+        "en": "Look for cracks, discolouration and loose joints around shower, bath, basin and drain. Replace sealant that has come loose."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "per_bathroom": true,
+      "include": {}
+    },
+    {
+      "id": "kitchen_hood_filter",
+      "category": "indoor",
+      "title": { "nb": "Rens filter i kjøkkenvifte", "en": "Clean the kitchen extractor filter" },
+      "description": {
+        "nb": "Vask fettfilteret i oppvaskmaskinen eller i varmt såpevann. Bytt kullfilter hvis viften har det.",
+        "en": "Wash the grease filter in the dishwasher or hot soapy water. Replace the charcoal filter if fitted."
+      },
+      "schedule": { "type": "interval", "every": 3, "unit": "months" },
+      "include": {}
+    },
+    {
+      "id": "dishwasher_filter",
+      "category": "indoor",
+      "title": { "nb": "Rens filter i oppvaskmaskin", "en": "Clean the dishwasher filter" },
+      "description": {
+        "nb": "Skru ut filteret i bunnen av maskinen og skyll det rent.",
+        "en": "Unscrew the filter at the bottom of the machine and rinse it clean."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "months" },
+      "include": {}
+    },
+    {
+      "id": "window_washing",
+      "category": "seasonal",
+      "title": { "nb": "Vask vinduer", "en": "Wash windows" },
+      "description": {
+        "nb": "Vask vinduer inne og ute vår og høst.",
+        "en": "Wash windows inside and out in spring and autumn."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 4, "day": 15 }, { "month": 9, "day": 15 }] },
+      "include": {}
+    },
+    {
+      "id": "windows_doors_check",
+      "category": "exterior",
+      "title": { "nb": "Sjekk vinduer og dører (tetningslister, hengsler)", "en": "Check windows and doors (seals, hinges)" },
+      "description": {
+        "nb": "Se over tetningslister, smør hengsler og låser, og sjekk at vinduer og dører lukker tett før vinteren.",
+        "en": "Inspect seals, lubricate hinges and locks, and check that windows and doors close tightly before winter."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 9, "day": 1 }] },
+      "include": {}
+    },
+    {
+      "id": "electrical_inspection",
+      "category": "safety",
+      "title": { "nb": "El-kontroll av det elektriske anlegget", "en": "Electrical installation inspection" },
+      "description": {
+        "nb": "Få en registrert elektroinstallatør til å kontrollere det elektriske anlegget. Anbefales for eldre boliger.",
+        "en": "Have a registered electrician inspect the electrical installation. Recommended for older homes."
+      },
+      "schedule": { "type": "interval", "every": 5, "unit": "years" },
+      "include": { "min_age_years": 20 }
+    },
+    {
+      "id": "water_heater_assessment",
+      "category": "indoor",
+      "title": { "nb": "Vurder varmtvannsbereder", "en": "Assess the water heater" },
+      "description": {
+        "nb": "Sjekk for rust og lekkasje, test sikkerhetsventilen og vurder utskifting når berederen nærmer seg 15–20 år.",
+        "en": "Check for rust and leaks, test the safety valve and consider replacement as the heater approaches 15–20 years."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "min_age_years": 15 }
+    },
+    {
+      "id": "chimney_stove_inspection",
+      "category": "heating",
+      "title": { "nb": "Sjekk ildsted og pipe", "en": "Inspect stove and chimney" },
+      "description": {
+        "nb": "Se etter sprekker i pipa og ildstedet, sjekk røykrør og at det er rent under feieluka. Feiing gjøres av kommunen.",
+        "en": "Look for cracks in the chimney and stove, check the flue pipe and that the soot door area is clean. Sweeping is done by the municipality."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "heating_any": ["wood_stove"] }
+    },
+    {
+      "id": "stove_gasket_check",
+      "category": "heating",
+      "title": { "nb": "Sjekk pakninger og glass på vedovn", "en": "Check stove gaskets and glass" },
+      "description": {
+        "nb": "Før fyringssesongen: sjekk at dørpakningen er tett og at glasset er helt. Bytt slitte pakninger.",
+        "en": "Before the heating season: check the door gasket seals and the glass is intact. Replace worn gaskets."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 9, "day": 15 }] },
+      "include": { "heating_any": ["wood_stove"] }
+    },
+    {
+      "id": "heat_pump_filter",
+      "category": "heating",
+      "title": { "nb": "Rens filter i varmepumpe", "en": "Clean the heat pump filter" },
+      "description": {
+        "nb": "Ta ut filtrene i innedelen, støvsug eller skyll dem og la dem tørke før de settes inn igjen.",
+        "en": "Remove the indoor unit filters, vacuum or rinse them and let them dry before refitting."
+      },
+      "schedule": { "type": "interval", "every": 3, "unit": "months" },
+      "include": { "heating_any": ["heat_pump"] }
+    },
+    {
+      "id": "heat_pump_outdoor_rinse",
+      "category": "heating",
+      "title": { "nb": "Spyl utedelen på varmepumpa", "en": "Rinse the heat pump outdoor unit" },
+      "description": {
+        "nb": "Fjern løv og skitt og spyl lamellene forsiktig med hageslange (ikke høytrykk).",
+        "en": "Remove leaves and dirt and gently rinse the fins with a garden hose (no pressure washer)."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 1 }] },
+      "include": { "heating_any": ["heat_pump"] }
+    },
+    {
+      "id": "heat_pump_condensate_drain",
+      "category": "heating",
+      "title": { "nb": "Sjekk kondensavløp på varmepumpa", "en": "Check the heat pump condensate drain" },
+      "description": {
+        "nb": "Før frosten: sjekk at kondensvannet renner fritt og ikke fryser til is under utedelen.",
+        "en": "Before frost: check condensate drains freely and won't freeze into ice under the outdoor unit."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 1 }] },
+      "include": { "heating_any": ["heat_pump"] }
+    },
+    {
+      "id": "bleed_radiators",
+      "category": "heating",
+      "title": { "nb": "Luft radiatorer", "en": "Bleed radiators" },
+      "description": {
+        "nb": "Luft radiatorene før fyringssesongen, og etterfyll vann i anlegget ved behov.",
+        "en": "Bleed the radiators before the heating season and top up the system if needed."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 9, "day": 15 }] },
+      "include": { "heating_any": ["hydronic"] }
+    },
+    {
+      "id": "hydronic_pressure_check",
+      "category": "heating",
+      "title": { "nb": "Sjekk trykk og fordelerskap (vannbåren varme)", "en": "Check pressure and manifold (hydronic heating)" },
+      "description": {
+        "nb": "Les av trykket på manometeret og se etter lekkasjer i fordelerskapet.",
+        "en": "Read the pressure gauge and check the manifold cabinet for leaks."
+      },
+      "schedule": { "type": "interval", "every": 6, "unit": "months" },
+      "include": { "heating_any": ["hydronic"] }
+    },
+    {
+      "id": "ventilation_filter_change",
+      "category": "ventilation",
+      "title": { "nb": "Bytt filter i ventilasjonsaggregatet", "en": "Replace the ventilation unit filters" },
+      "description": {
+        "nb": "Bytt til- og avtrekksfilter i aggregatet. Den mest glemte oppgaven – tette filter gir dårlig luft og høyere strømforbruk.",
+        "en": "Replace the supply and extract filters. The most forgotten task – clogged filters mean poor air and higher power use."
+      },
+      "schedule": { "type": "interval", "every": 6, "unit": "months" },
+      "include": { "ventilation_any": ["balanced"] }
+    },
+    {
+      "id": "ventilation_valves_clean",
+      "category": "ventilation",
+      "title": { "nb": "Rens ventiler og varmegjenvinner", "en": "Clean vents and heat exchanger" },
+      "description": {
+        "nb": "Tørk av til- og avtrekksventiler (uten å endre innstillingen) og rengjør varmegjenvinneren etter produsentens anvisning.",
+        "en": "Wipe supply and extract vents (without changing their setting) and clean the heat exchanger per the manufacturer."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "ventilation_any": ["balanced"] }
+    },
+    {
+      "id": "exhaust_fan_clean",
+      "category": "ventilation",
+      "title": { "nb": "Rens avtrekksvifte og ventiler", "en": "Clean the extract fan and vents" },
+      "description": {
+        "nb": "Rengjør avtrekksventiler på bad og kjøkken og sjekk at viften går.",
+        "en": "Clean the extract vents in bathroom and kitchen and check the fan runs."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "ventilation_any": ["exhaust"] }
+    },
+    {
+      "id": "natural_vents_check",
+      "category": "ventilation",
+      "title": { "nb": "Sjekk at luftventiler er åpne og rene", "en": "Check that air vents are open and clean" },
+      "description": {
+        "nb": "Gå over vindusventiler og veggventiler, rengjør dem og sjekk at de kan åpnes.",
+        "en": "Go over window and wall vents, clean them and check they open."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "ventilation_any": ["natural"] }
+    },
+    {
+      "id": "paint_wood_cladding",
+      "category": "exterior",
+      "title": { "nb": "Mal/beis kledning", "en": "Paint/stain wooden cladding" },
+      "description": {
+        "nb": "Vask, skrap og mal eller beis kledningen. Intervallet varierer med vær og eksponering – sørveggen trenger det oftest.",
+        "en": "Wash, scrape and paint or stain the cladding. The interval depends on weather and exposure – the south wall needs it most."
+      },
+      "schedule": { "type": "interval", "every": 7, "unit": "years" },
+      "due_soon_days": 90,
+      "include": { "cladding_any": ["wood", "mixed"], "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "wood_cladding_inspection",
+      "category": "exterior",
+      "title": { "nb": "Inspiser trekledning", "en": "Inspect wooden cladding" },
+      "description": {
+        "nb": "Gå rundt huset og se etter flassende maling, råte, sopp og sprekker – særlig nederst og rundt vinduer.",
+        "en": "Walk around the house looking for peeling paint, rot, mould and cracks – especially at the bottom and around windows."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 1 }] },
+      "include": { "cladding_any": ["wood", "mixed"], "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "render_check",
+      "category": "exterior",
+      "title": { "nb": "Sjekk puss og fuger", "en": "Check render and joints" },
+      "description": {
+        "nb": "Se etter sprekker, avskalling og fukt i pussen etter vinteren. Små sprekker bør tettes før de vokser.",
+        "en": "Look for cracks, spalling and damp in the render after winter. Seal small cracks before they grow."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 1 }] },
+      "include": { "cladding_any": ["render", "mixed"], "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "brick_joint_check",
+      "category": "exterior",
+      "title": { "nb": "Sjekk murfuger i teglfasade", "en": "Check mortar joints in brick facade" },
+      "description": {
+        "nb": "Tegl krever lite, men se etter løse eller sprukne fuger og fuktskjolder.",
+        "en": "Brick needs little, but look for loose or cracked joints and damp patches."
+      },
+      "schedule": { "type": "interval", "every": 5, "unit": "years" },
+      "include": { "cladding_any": ["brick"], "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "clean_gutters",
+      "category": "exterior",
+      "title": { "nb": "Rens takrenner og nedløp", "en": "Clean gutters and downpipes" },
+      "description": {
+        "nb": "Fjern løv og skitt fra takrenner og sjekk at nedløpene er åpne før vinteren.",
+        "en": "Remove leaves and debris from gutters and check that downpipes are clear before winter."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 15 }] },
+      "include": { "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "roof_inspection",
+      "category": "exterior",
+      "title": { "nb": "Inspiser tak og beslag", "en": "Inspect roof and flashings" },
+      "description": {
+        "nb": "Se etter løse eller knuste takstein/plater, mose og skadde beslag rundt pipe og gjennomføringer. Bruk kikkert eller drone fra bakken.",
+        "en": "Look for loose or broken tiles/sheets, moss and damaged flashing around the chimney and penetrations. Use binoculars or a drone from the ground."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "drainage_check",
+      "category": "exterior",
+      "title": { "nb": "Sjekk drenering og fukt i grunnmur", "en": "Check drainage and foundation damp" },
+      "description": {
+        "nb": "Etter snøsmeltingen: se etter fukt, saltutslag og vann ved grunnmuren, og sjekk at terrenget heller bort fra huset.",
+        "en": "After snowmelt: look for damp, efflorescence and water by the foundation, and check the ground slopes away from the house."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 4, "day": 15 }] },
+      "include": { "min_age_years": 30, "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "outdoor_tap_winterize",
+      "category": "seasonal",
+      "title": { "nb": "Frostsikre utekran og hageslange", "en": "Winterise outdoor tap and garden hose" },
+      "description": {
+        "nb": "Steng innvendig stoppekran for utekranen, tøm kranen og ta inn hageslangen før frosten.",
+        "en": "Shut the indoor valve for the outdoor tap, drain it and bring the hose in before frost."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 1 }] },
+      "include": { "types_exclude": ["apartment"] }
+    },
+    {
+      "id": "leaf_raking",
+      "category": "outdoor",
+      "title": { "nb": "Rak løv", "en": "Rake leaves" },
+      "description": {
+        "nb": "Rak løv fra plenen og bed, og legg det i kompost eller lever det til gjenvinning.",
+        "en": "Rake leaves off the lawn and beds and compost or recycle them."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 1 }] },
+      "include": { "requires_garden": true }
+    },
+    {
+      "id": "garden_spring_cleanup",
+      "category": "outdoor",
+      "title": { "nb": "Vårrydding i hagen", "en": "Spring garden clean-up" },
+      "description": {
+        "nb": "Rak plenen, fjern vinterskader, klipp ned stauder og gjør klart for sesongen.",
+        "en": "Rake the lawn, clear winter damage, cut back perennials and get ready for the season."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 4, "day": 15 }] },
+      "include": { "requires_garden": true }
+    },
+    {
+      "id": "asphalt_seal_cracks",
+      "category": "outdoor",
+      "title": { "nb": "Tett sprekker i asfalt", "en": "Seal cracks in asphalt" },
+      "description": {
+        "nb": "Tett sprekker i oppkjørselen før vinteren så vann ikke fryser og sprenger asfalten.",
+        "en": "Seal cracks in the driveway before winter so water can't freeze and break up the asphalt."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 9, "day": 1 }] },
+      "include": { "driveway_any": ["asphalt"] }
+    },
+    {
+      "id": "pavers_weeds_sand",
+      "category": "outdoor",
+      "title": { "nb": "Fjern ugress og etterfyll fugesand", "en": "Remove weeds and refill joint sand" },
+      "description": {
+        "nb": "Fjern ugress og mose i fugene, etterfyll fugesand og rett opp stein som har satt seg.",
+        "en": "Remove weeds and moss from the joints, refill joint sand and reset sunken pavers."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 15 }] },
+      "include": { "driveway_any": ["pavers"] }
+    },
+    {
+      "id": "gravel_top_up",
+      "category": "outdoor",
+      "title": { "nb": "Etterfyll og planer grus", "en": "Top up and level gravel" },
+      "description": {
+        "nb": "Fyll i hull og spor etter vinteren og planer grusen.",
+        "en": "Fill holes and ruts after winter and level the gravel."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 15 }] },
+      "include": { "driveway_any": ["gravel"] }
+    },
+    {
+      "id": "concrete_crack_check",
+      "category": "outdoor",
+      "title": { "nb": "Sjekk sprekker og fuger i betong", "en": "Check cracks and joints in concrete" },
+      "description": {
+        "nb": "Se etter sprekker og ødelagte fuger i betongen etter vinteren, og tett dem.",
+        "en": "Look for cracks and broken joints in the concrete after winter and seal them."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 15 }] },
+      "include": { "driveway_any": ["concrete"] }
+    },
+    {
+      "id": "wood_deck_oil",
+      "category": "outdoor",
+      "title": { "nb": "Rens og olje terrassen", "en": "Clean and oil the wooden deck" },
+      "description": {
+        "nb": "Vask terrassen med terrassevask, la den tørke og påfør terrasseolje eller beis i tørt vær.",
+        "en": "Wash the deck with deck cleaner, let it dry and apply deck oil or stain in dry weather."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 6, "day": 1 }] },
+      "include": { "deck_any": ["wood"] }
+    },
+    {
+      "id": "composite_deck_clean",
+      "category": "outdoor",
+      "title": { "nb": "Rens terrasse/uteplass", "en": "Clean the patio/composite deck" },
+      "description": {
+        "nb": "Vask kompositt- eller steinterrassen og fjern mose og grønske.",
+        "en": "Wash the composite or stone deck and remove moss and algae."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 15 }] },
+      "include": { "deck_any": ["composite_or_stone"] }
+    },
+    {
+      "id": "garage_door_service",
+      "category": "outdoor",
+      "title": { "nb": "Smør garasjeport og sjekk fotocelle", "en": "Lubricate garage door and check photocell" },
+      "description": {
+        "nb": "Smør hengsler, ruller og fjærer, og test at porten stopper og snur når fotocellen brytes.",
+        "en": "Lubricate hinges, rollers and springs, and test that the door stops and reverses when the photocell is blocked."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "garage_any": ["garage_with_door"] }
+    },
+    {
+      "id": "garage_roof_gutters",
+      "category": "outdoor",
+      "title": { "nb": "Sjekk tak og takrenner på garasje/carport", "en": "Check garage/carport roof and gutters" },
+      "description": {
+        "nb": "Fjern løv fra taket og rennene på garasjen eller carporten og se etter lekkasjer.",
+        "en": "Clear leaves from the garage or carport roof and gutters and look for leaks."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 15 }] },
+      "include": { "garage_any": ["garage_with_door", "carport"] }
+    },
+    {
+      "id": "well_water_sample",
+      "category": "safety",
+      "title": { "nb": "Ta vannprøve fra brønnen", "en": "Take a well water sample" },
+      "description": {
+        "nb": "Send en vannprøve til et akkreditert laboratorium for analyse av bakterier og kjemi.",
+        "en": "Send a water sample to an accredited lab for bacterial and chemical analysis."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "requires_own_well": true }
+    },
+    {
+      "id": "well_pump_check",
+      "category": "indoor",
+      "title": { "nb": "Sjekk brønn, pumpe og trykktank", "en": "Check well, pump and pressure tank" },
+      "description": {
+        "nb": "Sjekk at pumpa starter og stopper normalt, kontroller trykket i trykktanken og se etter lekkasjer og fukt i brønnlokket.",
+        "en": "Check the pump starts and stops normally, check the pressure tank pressure and look for leaks and damp under the well cover."
+      },
+      "schedule": { "type": "interval", "every": 1, "unit": "years" },
+      "include": { "requires_own_well": true }
+    },
+    {
+      "id": "cabin_drain_water",
+      "category": "cabin",
+      "title": { "nb": "Steng og tøm vannet på hytta", "en": "Shut off and drain the cabin water" },
+      "description": {
+        "nb": "Steng hovedkranen, tøm rør, bereder, toalett og vannlåser, og fyll frostvæske i sluk der det trengs.",
+        "en": "Close the main valve, drain pipes, water heater, toilet and traps, and add antifreeze to drains where needed."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 1 }] },
+      "include": { "types_any": ["cabin"], "cabin_winter_use_any": ["closed"], "cabin_water_any": ["year_round", "summer"] }
+    },
+    {
+      "id": "cabin_fill_water",
+      "category": "cabin",
+      "title": { "nb": "Åpne og fyll vannet på hytta", "en": "Open and fill the cabin water" },
+      "description": {
+        "nb": "Steng tappekraner, åpne hovedkranen sakte og se etter lekkasjer mens anlegget fylles.",
+        "en": "Close drain valves, open the main valve slowly and check for leaks while the system fills."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 1 }] },
+      "include": { "types_any": ["cabin"], "cabin_winter_use_any": ["closed"], "cabin_water_any": ["year_round", "summer"] }
+    },
+    {
+      "id": "cabin_season_close",
+      "category": "cabin",
+      "title": { "nb": "Stengerutine for vinteren", "en": "Close the cabin for winter" },
+      "description": {
+        "nb": "Fjern mat som kan fryse eller lokke mus, slå av strøm til unødvendige kurser, sett frostvakt, lukk skodder og lås.",
+        "en": "Remove food that may freeze or attract mice, switch off non-essential circuits, set frost protection, close shutters and lock up."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 10, "day": 1 }] },
+      "include": { "types_any": ["cabin"], "cabin_winter_use_any": ["closed"] }
+    },
+    {
+      "id": "cabin_season_open",
+      "category": "cabin",
+      "title": { "nb": "Åpne hytta for sesongen", "en": "Open the cabin for the season" },
+      "description": {
+        "nb": "Se etter vinterskader, mus og fukt, luft godt ut, slå på strømkurser og sjekk røykvarslere.",
+        "en": "Check for winter damage, mice and damp, air it out, switch on circuits and check smoke alarms."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 5, "day": 1 }] },
+      "include": { "types_any": ["cabin"], "cabin_winter_use_any": ["closed"] }
+    },
+    {
+      "id": "cabin_snow_load",
+      "category": "cabin",
+      "title": { "nb": "Sjekk snølast på hyttetaket", "en": "Check snow load on the cabin roof" },
+      "description": {
+        "nb": "Sjekk snømengden på taket midtvinters og måk ved behov – særlig etter mildvær og regn.",
+        "en": "Check the snow on the roof mid-winter and clear it if needed – especially after thaw and rain."
+      },
+      "schedule": { "type": "fixed", "dates": [{ "month": 1, "day": 15 }, { "month": 3, "day": 1 }] },
+      "include": { "types_any": ["cabin"] }
+    }
+  ]
+}

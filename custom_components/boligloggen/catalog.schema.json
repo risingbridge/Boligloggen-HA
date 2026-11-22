@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Boligloggen task catalog",
+  "description": "Editor aid only. The authoritative validation is planner/catalog.py (e.g. it also rejects 31 April).",
+  "type": "object",
+  "required": ["version", "templates"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "templates": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/template" } }
+  },
+  "$defs": {
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "nb": { "type": "string" }, "en": { "type": "string" } }
+    },
+    "propertyType": { "enum": ["house", "townhouse", "apartment", "cabin"] },
+    "monthDay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["month"],
+      "properties": {
+        "month": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "day": { "type": "integer", "minimum": 1, "maximum": 31, "default": 1 }
+      }
+    },
+    "schedule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "every", "unit"],
+          "properties": {
+            "type": { "const": "interval" },
+            "every": { "type": "integer", "minimum": 1 },
+            "unit": { "enum": ["months", "years"] }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "dates"],
+          "properties": {
+            "type": { "const": "fixed" },
+            "dates": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/monthDay" } }
+          }
+        }
+      ]
+    },
+    "include": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "types_any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/propertyType" } },
+        "types_exclude": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/propertyType" } },
+        "heating_any": { "type": "array", "minItems": 1, "items": { "enum": ["wood_stove", "heat_pump", "hydronic", "electric", "district"] } },
+        "ventilation_any": { "type": "array", "minItems": 1, "items": { "enum": ["balanced", "exhaust", "natural"] } },
+        "cladding_any": { "type": "array", "minItems": 1, "items": { "enum": ["wood", "render", "brick", "mixed"] } },
+        "driveway_any": { "type": "array", "minItems": 1, "items": { "enum": ["none", "asphalt", "pavers", "gravel", "concrete"] } },
+        "deck_any": { "type": "array", "minItems": 1, "items": { "enum": ["none", "wood", "composite_or_stone"] } },
+        "garage_any": { "type": "array", "minItems": 1, "items": { "enum": ["none", "garage_with_door", "carport"] } },
+        "requires_garden": { "type": "boolean" },
+        "requires_own_well": { "type": "boolean" },
+        "cabin_winter_use_any": { "type": "array", "minItems": 1, "items": { "enum": ["closed", "year_round"] } },
+        "cabin_water_any": { "type": "array", "minItems": 1, "items": { "enum": ["year_round", "summer", "none"] } },
+        "min_age_years": { "type": "integer", "minimum": 0 },
+        "max_age_years": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "template": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "title", "schedule"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "category": { "enum": ["safety", "indoor", "wet_room", "heating", "ventilation", "exterior", "outdoor", "cabin", "seasonal"] },
+        "title": { "allOf": [{ "$ref": "#/$defs/localized" }, { "required": ["nb", "en"] }] },
+        "description": { "$ref": "#/$defs/localized" },
+        "schedule": { "$ref": "#/$defs/schedule" },
+        "due_soon_days": { "type": "integer", "minimum": 0 },
+        "per_bathroom": { "type": "boolean" },
+        "include": { "$ref": "#/$defs/include" }
+      }
+    }
+  }
+}

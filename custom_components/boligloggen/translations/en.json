@@ -1,0 +1,562 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "New property",
+        "description": "Answer a few questions and Boligloggen suggests a maintenance plan. You can adjust everything afterwards.",
+        "data": {
+          "name": "Name",
+          "address": "Address",
+          "type": "Property type",
+          "build_year": "Year built",
+          "age_band": "Age (if you don't know the year)"
+        },
+        "data_description": {
+          "name": "Shown as the device name, e.g. “Home” or “Cabin”.",
+          "address": "Free text, optional.",
+          "build_year": "Leave empty and choose an age band if unsure."
+        }
+      },
+      "building": {
+        "title": "The building",
+        "description": "These answers decide heating, ventilation, wet-room and exterior tasks.",
+        "data": {
+          "heating": "Heating (choose all that apply)",
+          "ventilation": "Ventilation",
+          "cladding": "Exterior cladding",
+          "bathroom_count": "Bathrooms / wet rooms"
+        },
+        "data_description": {
+          "ventilation": "“Don't know” is set from the building's age."
+        }
+      },
+      "outdoor": {
+        "title": "Outdoor area",
+        "description": "Answer each item – choose “No/None” for what you don't have.",
+        "data": {
+          "garden": "Own garden/lawn?",
+          "driveway": "Own driveway?",
+          "deck": "Deck/patio?",
+          "garage": "Garage/carport?",
+          "water": "Water supply"
+        }
+      },
+      "cabin": {
+        "title": "The cabin",
+        "description": "A few cabin-specific questions.",
+        "data": {
+          "cabin_winter_use": "Winter use",
+          "cabin_water": "Water at the cabin"
+        }
+      },
+      "review": {
+        "title": "Your plan",
+        "description": "{count} tasks suggested for {name}. Untick the ones that don't apply.",
+        "data": {
+          "tasks": "Tasks"
+        }
+      }
+    },
+    "error": {
+      "title_required": "Enter a title.",
+      "invalid_date": "Invalid date. Use MM-DD or D.M, e.g. 12-01 or 1.12.",
+      "invalid_interval": "Enter a valid interval.",
+      "completed_on_in_future": "The date can't be in the future.",
+      "age_required": "Enter the year built or choose an age band.",
+      "name_required": "Enter a name."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edit plan",
+        "menu_options": {
+          "add_catalog": "Add from catalog",
+          "add_custom": "Add custom task",
+          "edit_task": "Edit task",
+          "remove_task": "Remove task",
+          "restore_task": "Restore archived task",
+          "profile": "Edit property details"
+        }
+      },
+      "add_catalog": {
+        "title": "Add from catalog",
+        "description": "{count} catalog tasks are available. Tick “show all” and submit without choosing to list tasks that don't match your property too.",
+        "data": {
+          "templates": "Tasks",
+          "show_all": "Show all catalog tasks"
+        }
+      },
+      "add_custom": {
+        "title": "Add custom task",
+        "data": {
+          "title": "Title",
+          "description": "Description",
+          "category": "Category",
+          "schedule_type": "Schedule type",
+          "every": "Every",
+          "unit": "Unit",
+          "dates": "Fixed dates",
+          "due_soon_days": "Days of warning (due soon)"
+        },
+        "data_description": {
+          "schedule_type": "Fixed = tied to the calendar/season. Interval = counted from when it was last done.",
+          "dates": "For fixed schedules: comma-separated, as MM-DD (12-01) or D.M (1.12).",
+          "due_soon_days": "Leave empty for the default."
+        }
+      },
+      "edit_task": {
+        "title": "Edit task",
+        "data": {
+          "task_id": "Task"
+        }
+      },
+      "edit_task_fields": {
+        "title": "Edit “{title}”",
+        "data": {
+          "title": "Title",
+          "description": "Description",
+          "category": "Category",
+          "schedule_type": "Schedule type",
+          "every": "Every",
+          "unit": "Unit",
+          "dates": "Fixed dates",
+          "due_soon_days": "Days of warning (due soon)",
+          "last_completed": "Last done",
+          "next_due": "Next due"
+        },
+        "data_description": {
+          "schedule_type": "Fixed = tied to the calendar/season. Interval = counted from when it was last done.",
+          "dates": "For fixed schedules: comma-separated, as MM-DD (12-01) or D.M (1.12).",
+          "due_soon_days": "Leave empty for the default.",
+          "last_completed": "Changing this recomputes the next due date."
+        }
+      },
+      "remove_task": {
+        "title": "Remove tasks",
+        "description": "Removed tasks are archived – their history is kept and they can be restored.",
+        "data": {
+          "task_ids": "Tasks"
+        }
+      },
+      "restore_task": {
+        "title": "Restore tasks",
+        "data": {
+          "task_ids": "Tasks"
+        }
+      },
+      "profile": {
+        "title": "Property details",
+        "data": {
+          "name": "Name",
+          "address": "Address",
+          "type": "Property type",
+          "build_year": "Year built",
+          "age_band": "Age (if you don't know the year)"
+        },
+        "data_description": {
+          "name": "Shown as the device name, e.g. “Home” or “Cabin”.",
+          "address": "Free text, optional.",
+          "build_year": "Leave empty and choose an age band if unsure."
+        }
+      },
+      "building": {
+        "title": "The building",
+        "description": "These answers decide heating, ventilation, wet-room and exterior tasks.",
+        "data": {
+          "heating": "Heating (choose all that apply)",
+          "ventilation": "Ventilation",
+          "cladding": "Exterior cladding",
+          "bathroom_count": "Bathrooms / wet rooms"
+        },
+        "data_description": {
+          "ventilation": "“Don't know” is set from the building's age."
+        }
+      },
+      "outdoor": {
+        "title": "Outdoor area",
+        "description": "Answer each item – choose “No/None” for what you don't have.",
+        "data": {
+          "garden": "Own garden/lawn?",
+          "driveway": "Own driveway?",
+          "deck": "Deck/patio?",
+          "garage": "Garage/carport?",
+          "water": "Water supply"
+        }
+      },
+      "cabin": {
+        "title": "The cabin",
+        "description": "A few cabin-specific questions.",
+        "data": {
+          "cabin_winter_use": "Winter use",
+          "cabin_water": "Water at the cabin"
+        }
+      },
+      "profile_review": {
+        "title": "Suggested changes",
+        "description": "Based on the new details: {add_count} tasks to add and {remove_count} catalog tasks that no longer fit. Custom tasks are never removed automatically.",
+        "data": {
+          "add": "Add",
+          "remove": "Remove (archive)"
+        }
+      }
+    },
+    "error": {
+      "title_required": "Enter a title.",
+      "invalid_date": "Invalid date. Use MM-DD or D.M, e.g. 12-01 or 1.12.",
+      "invalid_interval": "Enter a valid interval.",
+      "completed_on_in_future": "The date can't be in the future.",
+      "age_required": "Enter the year built or choose an age band.",
+      "name_required": "Enter a name."
+    },
+    "abort": {
+      "no_tasks": "There are no active tasks.",
+      "no_archived": "There are no archived tasks."
+    }
+  },
+  "selector": {
+    "property_type": {
+      "options": {
+        "house": "House",
+        "townhouse": "Townhouse / semi-detached",
+        "apartment": "Apartment",
+        "cabin": "Cabin"
+      }
+    },
+    "age_band": {
+      "options": {
+        "lt10": "Under 10 years",
+        "10to30": "10–30 years",
+        "30to50": "30–50 years",
+        "gt50": "Over 50 years"
+      }
+    },
+    "heating": {
+      "options": {
+        "wood_stove": "Wood stove/fireplace with chimney",
+        "heat_pump": "Heat pump",
+        "hydronic": "Hydronic (radiators/underfloor)",
+        "electric": "Electric",
+        "district": "District heating"
+      }
+    },
+    "ventilation": {
+      "options": {
+        "balanced": "Balanced with heat recovery",
+        "exhaust": "Mechanical exhaust",
+        "natural": "Natural",
+        "unknown": "Don't know"
+      }
+    },
+    "cladding": {
+      "options": {
+        "wood": "Wood (painted/stained)",
+        "render": "Masonry/render",
+        "brick": "Brick",
+        "mixed": "Combination"
+      }
+    },
+    "bathroom_count": {
+      "options": {
+        "1": "1",
+        "2": "2",
+        "3": "3 or more"
+      }
+    },
+    "yes_no": {
+      "options": {
+        "no": "No",
+        "yes": "Yes"
+      }
+    },
+    "driveway": {
+      "options": {
+        "none": "No",
+        "asphalt": "Asphalt",
+        "pavers": "Paving stones",
+        "gravel": "Gravel",
+        "concrete": "Concrete"
+      }
+    },
+    "deck": {
+      "options": {
+        "none": "No",
+        "wood": "Wood",
+        "composite_or_stone": "Composite/stone"
+      }
+    },
+    "garage": {
+      "options": {
+        "none": "No",
+        "garage_with_door": "Garage with door",
+        "carport": "Carport"
+      }
+    },
+    "water": {
+      "options": {
+        "public": "Public",
+        "own_well": "Own well/borehole"
+      }
+    },
+    "cabin_winter_use": {
+      "options": {
+        "closed": "Closed/unheated in winter",
+        "year_round": "Year-round"
+      }
+    },
+    "cabin_water": {
+      "options": {
+        "year_round": "Running water all year",
+        "summer": "Summer water",
+        "none": "No running water"
+      }
+    },
+    "category": {
+      "options": {
+        "safety": "Safety",
+        "indoor": "Indoor",
+        "wet_room": "Wet room",
+        "heating": "Heating",
+        "ventilation": "Ventilation",
+        "exterior": "Exterior",
+        "outdoor": "Outdoor",
+        "cabin": "Cabin",
+        "seasonal": "Seasonal"
+      }
+    },
+    "schedule_type": {
+      "options": {
+        "interval": "Interval (from last done)",
+        "fixed": "Fixed dates"
+      }
+    },
+    "unit": {
+      "options": {
+        "months": "Months",
+        "years": "Years"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_task": {
+        "name": "Next task"
+      },
+      "overdue": {
+        "name": "Overdue"
+      },
+      "due_soon": {
+        "name": "Due soon"
+      },
+      "last_completed": {
+        "name": "Last completed"
+      }
+    },
+    "calendar": {
+      "plan": {
+        "name": "Maintenance plan"
+      }
+    }
+  },
+  "exceptions": {
+    "task_not_found": "Task {task_id} was not found.",
+    "task_archived": "“{title}” is archived.",
+    "not_due_yet": "“{title}” is not due until {date}. Use force to complete it anyway.",
+    "completed_on_in_future": "The date can't be in the future.",
+    "nothing_to_undo": "“{title}” has no completion to undo.",
+    "unknown_template": "Unknown catalog task: {template_id}.",
+    "title_required": "A title is required.",
+    "property_not_found": "Property {config_entry_id} was not found or is not loaded.",
+    "not_a_task_entity": "{entity_id} is not a Boligloggen task entity.",
+    "task_target_required": "Give entity_id, or config_entry_id and task_id.",
+    "schedule_required": "schedule_type is required for custom tasks.",
+    "invalid_date": "Invalid date: {value}.",
+    "invalid_interval": "Invalid interval: {value}."
+  },
+  "services": {
+    "complete_task": {
+      "name": "Complete task",
+      "description": "Mark a task as done and log who did it.",
+      "fields": {
+        "entity_id": {
+          "name": "Task entity",
+          "description": "Task sensor or button."
+        },
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Use with config_entry_id instead of entity_id."
+        },
+        "note": {
+          "name": "Note",
+          "description": "Optional note for the log."
+        },
+        "completed_on": {
+          "name": "Completed on",
+          "description": "Defaults to today."
+        },
+        "force": {
+          "name": "Force",
+          "description": "Complete a fixed-date task before it is due."
+        }
+      }
+    },
+    "undo_completion": {
+      "name": "Undo completion",
+      "description": "Remove the task's latest log entry and restore its dates.",
+      "fields": {
+        "entity_id": {
+          "name": "Task entity",
+          "description": "Task sensor or button."
+        },
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Use with config_entry_id instead of entity_id."
+        }
+      }
+    },
+    "add_task": {
+      "name": "Add task",
+      "description": "Add a catalog task (template_id) or a custom task. Admin only.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "template_id": {
+          "name": "Catalog task",
+          "description": "Template id, e.g. heat_pump_filter."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Title"
+        },
+        "description": {
+          "name": "Description",
+          "description": "Description"
+        },
+        "category": {
+          "name": "Category",
+          "description": "Category"
+        },
+        "schedule_type": {
+          "name": "Schedule type",
+          "description": "fixed or interval."
+        },
+        "every": {
+          "name": "Every",
+          "description": "Interval length."
+        },
+        "unit": {
+          "name": "Unit",
+          "description": "months or years."
+        },
+        "dates": {
+          "name": "Dates",
+          "description": "Fixed dates as MM-DD, e.g. 04-01, 10-01."
+        },
+        "due_soon_days": {
+          "name": "Due-soon days",
+          "description": "Due-soon days"
+        }
+      }
+    },
+    "update_task": {
+      "name": "Update task",
+      "description": "Edit a task. Admin only.",
+      "fields": {
+        "entity_id": {
+          "name": "Task entity",
+          "description": "Task sensor or button."
+        },
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Use with config_entry_id instead of entity_id."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Title"
+        },
+        "description": {
+          "name": "Description",
+          "description": "Description"
+        },
+        "category": {
+          "name": "Category",
+          "description": "Category"
+        },
+        "schedule_type": {
+          "name": "Schedule type",
+          "description": "fixed or interval."
+        },
+        "every": {
+          "name": "Every",
+          "description": "Interval length."
+        },
+        "unit": {
+          "name": "Unit",
+          "description": "months or years."
+        },
+        "dates": {
+          "name": "Dates",
+          "description": "Fixed dates as MM-DD, e.g. 04-01, 10-01."
+        },
+        "due_soon_days": {
+          "name": "Due-soon days",
+          "description": "Due-soon days"
+        },
+        "last_completed": {
+          "name": "Last done",
+          "description": "Recomputes the next due date."
+        },
+        "next_due": {
+          "name": "Next due",
+          "description": "Set the next due date directly."
+        }
+      }
+    },
+    "remove_task": {
+      "name": "Remove task",
+      "description": "Archive a task (history is kept). Admin only.",
+      "fields": {
+        "entity_id": {
+          "name": "Task entity",
+          "description": "Task sensor or button."
+        },
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Use with config_entry_id instead of entity_id."
+        }
+      }
+    },
+    "restore_task": {
+      "name": "Restore task",
+      "description": "Restore an archived task. Admin only.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Property",
+          "description": "Config entry ID of the property."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Use with config_entry_id instead of entity_id."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,562 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ny bolig",
+        "description": "Svar på noen spørsmål, så foreslår Boligloggen en vedlikeholdsplan. Alt kan justeres etterpå.",
+        "data": {
+          "name": "Navn",
+          "address": "Adresse",
+          "type": "Boligtype",
+          "build_year": "Byggeår",
+          "age_band": "Alder (hvis du ikke vet byggeåret)"
+        },
+        "data_description": {
+          "name": "Vises som enhetsnavn, f.eks. «Hjemme» eller «Hytta».",
+          "address": "Fritekst, valgfritt.",
+          "build_year": "La stå tomt og velg aldersbånd hvis du er usikker."
+        }
+      },
+      "building": {
+        "title": "Bygningen",
+        "description": "Svarene avgjør oppgaver for oppvarming, ventilasjon, våtrom og fasade.",
+        "data": {
+          "heating": "Oppvarming (velg alle som passer)",
+          "ventilation": "Ventilasjon",
+          "cladding": "Utvendig kledning",
+          "bathroom_count": "Antall bad/våtrom"
+        },
+        "data_description": {
+          "ventilation": "«Vet ikke» settes ut fra byggeåret."
+        }
+      },
+      "outdoor": {
+        "title": "Uteområde",
+        "description": "Svar på hvert punkt – velg «Nei/Ingen» for det du ikke har.",
+        "data": {
+          "garden": "Egen hage/plen?",
+          "driveway": "Egen oppkjørsel?",
+          "deck": "Terrasse/platting?",
+          "garage": "Garasje/carport?",
+          "water": "Vannforsyning"
+        }
+      },
+      "cabin": {
+        "title": "Hytta",
+        "description": "Noen spørsmål som gjelder hytta.",
+        "data": {
+          "cabin_winter_use": "Vinterbruk",
+          "cabin_water": "Vann på hytta"
+        }
+      },
+      "review": {
+        "title": "Din plan",
+        "description": "{count} gjøremål foreslått for {name}. Fjern haken for dem som ikke passer.",
+        "data": {
+          "tasks": "Gjøremål"
+        }
+      }
+    },
+    "error": {
+      "title_required": "Skriv inn en tittel.",
+      "invalid_date": "Ugyldig dato. Bruk MM-DD eller D.M, f.eks. 12-01 eller 1.12.",
+      "invalid_interval": "Skriv inn et gyldig intervall.",
+      "completed_on_in_future": "Datoen kan ikke være fram i tid.",
+      "age_required": "Fyll inn byggeår eller velg et aldersbånd.",
+      "name_required": "Skriv inn et navn."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Endre plan",
+        "menu_options": {
+          "add_catalog": "Legg til fra katalog",
+          "add_custom": "Legg til egendefinert",
+          "edit_task": "Endre gjøremål",
+          "remove_task": "Fjern gjøremål",
+          "restore_task": "Gjenopprett gjøremål",
+          "profile": "Endre boligdetaljer"
+        }
+      },
+      "add_catalog": {
+        "title": "Legg til fra katalog",
+        "description": "{count} katalogoppgaver er tilgjengelige. Kryss av for «vis alle» og send uten å velge for å se også oppgaver som ikke passer boligen.",
+        "data": {
+          "templates": "Gjøremål",
+          "show_all": "Vis alle katalogoppgaver"
+        }
+      },
+      "add_custom": {
+        "title": "Legg til egendefinert gjøremål",
+        "data": {
+          "title": "Tittel",
+          "description": "Beskrivelse",
+          "category": "Kategori",
+          "schedule_type": "Type plan",
+          "every": "Hver",
+          "unit": "Enhet",
+          "dates": "Faste datoer",
+          "due_soon_days": "Dager varsel (snart aktuell)"
+        },
+        "data_description": {
+          "schedule_type": "Fast = knyttet til kalender/sesong. Intervall = regnes fra sist utført.",
+          "dates": "For faste datoer: kommaseparert, som MM-DD (12-01) eller D.M (1.12).",
+          "due_soon_days": "La stå tomt for standardverdi."
+        }
+      },
+      "edit_task": {
+        "title": "Endre gjøremål",
+        "data": {
+          "task_id": "Gjøremål"
+        }
+      },
+      "edit_task_fields": {
+        "title": "Endre «{title}»",
+        "data": {
+          "title": "Tittel",
+          "description": "Beskrivelse",
+          "category": "Kategori",
+          "schedule_type": "Type plan",
+          "every": "Hver",
+          "unit": "Enhet",
+          "dates": "Faste datoer",
+          "due_soon_days": "Dager varsel (snart aktuell)",
+          "last_completed": "Sist utført",
+          "next_due": "Neste frist"
+        },
+        "data_description": {
+          "schedule_type": "Fast = knyttet til kalender/sesong. Intervall = regnes fra sist utført.",
+          "dates": "For faste datoer: kommaseparert, som MM-DD (12-01) eller D.M (1.12).",
+          "due_soon_days": "La stå tomt for standardverdi.",
+          "last_completed": "Endring her beregner neste frist på nytt."
+        }
+      },
+      "remove_task": {
+        "title": "Fjern gjøremål",
+        "description": "Fjernede gjøremål arkiveres – historikken beholdes og de kan gjenopprettes.",
+        "data": {
+          "task_ids": "Gjøremål"
+        }
+      },
+      "restore_task": {
+        "title": "Gjenopprett gjøremål",
+        "data": {
+          "task_ids": "Gjøremål"
+        }
+      },
+      "profile": {
+        "title": "Boligdetaljer",
+        "data": {
+          "name": "Navn",
+          "address": "Adresse",
+          "type": "Boligtype",
+          "build_year": "Byggeår",
+          "age_band": "Alder (hvis du ikke vet byggeåret)"
+        },
+        "data_description": {
+          "name": "Vises som enhetsnavn, f.eks. «Hjemme» eller «Hytta».",
+          "address": "Fritekst, valgfritt.",
+          "build_year": "La stå tomt og velg aldersbånd hvis du er usikker."
+        }
+      },
+      "building": {
+        "title": "Bygningen",
+        "description": "Svarene avgjør oppgaver for oppvarming, ventilasjon, våtrom og fasade.",
+        "data": {
+          "heating": "Oppvarming (velg alle som passer)",
+          "ventilation": "Ventilasjon",
+          "cladding": "Utvendig kledning",
+          "bathroom_count": "Antall bad/våtrom"
+        },
+        "data_description": {
+          "ventilation": "«Vet ikke» settes ut fra byggeåret."
+        }
+      },
+      "outdoor": {
+        "title": "Uteområde",
+        "description": "Svar på hvert punkt – velg «Nei/Ingen» for det du ikke har.",
+        "data": {
+          "garden": "Egen hage/plen?",
+          "driveway": "Egen oppkjørsel?",
+          "deck": "Terrasse/platting?",
+          "garage": "Garasje/carport?",
+          "water": "Vannforsyning"
+        }
+      },
+      "cabin": {
+        "title": "Hytta",
+        "description": "Noen spørsmål som gjelder hytta.",
+        "data": {
+          "cabin_winter_use": "Vinterbruk",
+          "cabin_water": "Vann på hytta"
+        }
+      },
+      "profile_review": {
+        "title": "Foreslåtte endringer",
+        "description": "Ut fra de nye detaljene: {add_count} gjøremål å legge til og {remove_count} katalogoppgaver som ikke lenger passer. Egendefinerte gjøremål fjernes aldri automatisk.",
+        "data": {
+          "add": "Legg til",
+          "remove": "Fjern (arkiver)"
+        }
+      }
+    },
+    "error": {
+      "title_required": "Skriv inn en tittel.",
+      "invalid_date": "Ugyldig dato. Bruk MM-DD eller D.M, f.eks. 12-01 eller 1.12.",
+      "invalid_interval": "Skriv inn et gyldig intervall.",
+      "completed_on_in_future": "Datoen kan ikke være fram i tid.",
+      "age_required": "Fyll inn byggeår eller velg et aldersbånd.",
+      "name_required": "Skriv inn et navn."
+    },
+    "abort": {
+      "no_tasks": "Det finnes ingen aktive gjøremål.",
+      "no_archived": "Det finnes ingen arkiverte gjøremål."
+    }
+  },
+  "selector": {
+    "property_type": {
+      "options": {
+        "house": "Enebolig",
+        "townhouse": "Rekkehus/tomannsbolig",
+        "apartment": "Leilighet",
+        "cabin": "Hytte"
+      }
+    },
+    "age_band": {
+      "options": {
+        "lt10": "Under 10 år",
+        "10to30": "10–30 år",
+        "30to50": "30–50 år",
+        "gt50": "Over 50 år"
+      }
+    },
+    "heating": {
+      "options": {
+        "wood_stove": "Vedovn/peis med pipe",
+        "heat_pump": "Varmepumpe",
+        "hydronic": "Vannbåren (radiator/gulvvarme)",
+        "electric": "Elektrisk",
+        "district": "Fjernvarme"
+      }
+    },
+    "ventilation": {
+      "options": {
+        "balanced": "Balansert med varmegjenvinning",
+        "exhaust": "Mekanisk avtrekk",
+        "natural": "Naturlig",
+        "unknown": "Vet ikke"
+      }
+    },
+    "cladding": {
+      "options": {
+        "wood": "Tre (malt/beiset)",
+        "render": "Mur/puss",
+        "brick": "Tegl",
+        "mixed": "Kombinasjon"
+      }
+    },
+    "bathroom_count": {
+      "options": {
+        "1": "1",
+        "2": "2",
+        "3": "3 eller flere"
+      }
+    },
+    "yes_no": {
+      "options": {
+        "no": "Nei",
+        "yes": "Ja"
+      }
+    },
+    "driveway": {
+      "options": {
+        "none": "Nei",
+        "asphalt": "Asfalt",
+        "pavers": "Belegningsstein",
+        "gravel": "Grus",
+        "concrete": "Betong"
+      }
+    },
+    "deck": {
+      "options": {
+        "none": "Nei",
+        "wood": "Tre",
+        "composite_or_stone": "Kompositt/stein"
+      }
+    },
+    "garage": {
+      "options": {
+        "none": "Nei",
+        "garage_with_door": "Garasje med port",
+        "carport": "Carport"
+      }
+    },
+    "water": {
+      "options": {
+        "public": "Offentlig",
+        "own_well": "Egen brønn/borehull"
+      }
+    },
+    "cabin_winter_use": {
+      "options": {
+        "closed": "Vinterstengt/uoppvarmet",
+        "year_round": "Helårs"
+      }
+    },
+    "cabin_water": {
+      "options": {
+        "year_round": "Innlagt helår",
+        "summer": "Sommervann",
+        "none": "Ikke innlagt"
+      }
+    },
+    "category": {
+      "options": {
+        "safety": "Sikkerhet",
+        "indoor": "Innendørs",
+        "wet_room": "Våtrom",
+        "heating": "Oppvarming",
+        "ventilation": "Ventilasjon",
+        "exterior": "Utvendig",
+        "outdoor": "Uteområde",
+        "cabin": "Hytte",
+        "seasonal": "Sesong"
+      }
+    },
+    "schedule_type": {
+      "options": {
+        "interval": "Intervall (fra sist utført)",
+        "fixed": "Faste datoer"
+      }
+    },
+    "unit": {
+      "options": {
+        "months": "Måneder",
+        "years": "År"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_task": {
+        "name": "Neste gjøremål"
+      },
+      "overdue": {
+        "name": "Forfalt"
+      },
+      "due_soon": {
+        "name": "Snart aktuelt"
+      },
+      "last_completed": {
+        "name": "Sist utført"
+      }
+    },
+    "calendar": {
+      "plan": {
+        "name": "Vedlikeholdsplan"
+      }
+    }
+  },
+  "exceptions": {
+    "task_not_found": "Fant ikke gjøremålet {task_id}.",
+    "task_archived": "«{title}» er arkivert.",
+    "not_due_yet": "«{title}» er ikke aktuell før {date}. Bruk «force» for å fullføre likevel.",
+    "completed_on_in_future": "Datoen kan ikke være fram i tid.",
+    "nothing_to_undo": "«{title}» har ingen fullføring å angre.",
+    "unknown_template": "Ukjent katalogoppgave: {template_id}.",
+    "title_required": "Tittel må fylles ut.",
+    "property_not_found": "Fant ikke boligen {config_entry_id}, eller den er ikke lastet.",
+    "not_a_task_entity": "{entity_id} er ikke en Boligloggen-gjøremålsentitet.",
+    "task_target_required": "Oppgi entity_id, eller config_entry_id og task_id.",
+    "schedule_required": "schedule_type må oppgis for egendefinerte gjøremål.",
+    "invalid_date": "Ugyldig dato: {value}.",
+    "invalid_interval": "Ugyldig intervall: {value}."
+  },
+  "services": {
+    "complete_task": {
+      "name": "Fullfør gjøremål",
+      "description": "Merk et gjøremål som utført og logg hvem som gjorde det.",
+      "fields": {
+        "entity_id": {
+          "name": "Gjøremålsentitet",
+          "description": "Gjøremålets sensor eller knapp."
+        },
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "task_id": {
+          "name": "Gjøremåls-ID",
+          "description": "Brukes sammen med config_entry_id i stedet for entity_id."
+        },
+        "note": {
+          "name": "Notat",
+          "description": "Valgfritt notat i loggen."
+        },
+        "completed_on": {
+          "name": "Utført dato",
+          "description": "Standard er i dag."
+        },
+        "force": {
+          "name": "Tving",
+          "description": "Fullfør et gjøremål med fast dato før det er aktuelt."
+        }
+      }
+    },
+    "undo_completion": {
+      "name": "Angre fullføring",
+      "description": "Fjern siste loggføring og gjenopprett datoene.",
+      "fields": {
+        "entity_id": {
+          "name": "Gjøremålsentitet",
+          "description": "Gjøremålets sensor eller knapp."
+        },
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "task_id": {
+          "name": "Gjøremåls-ID",
+          "description": "Brukes sammen med config_entry_id i stedet for entity_id."
+        }
+      }
+    },
+    "add_task": {
+      "name": "Legg til gjøremål",
+      "description": "Legg til en katalogoppgave (template_id) eller et egendefinert gjøremål. Kun admin.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "template_id": {
+          "name": "Katalogoppgave",
+          "description": "Mal-ID, f.eks. heat_pump_filter."
+        },
+        "title": {
+          "name": "Tittel",
+          "description": "Tittel"
+        },
+        "description": {
+          "name": "Beskrivelse",
+          "description": "Beskrivelse"
+        },
+        "category": {
+          "name": "Kategori",
+          "description": "Kategori"
+        },
+        "schedule_type": {
+          "name": "Type plan",
+          "description": "fixed (fast) eller interval."
+        },
+        "every": {
+          "name": "Hver",
+          "description": "Intervallets lengde."
+        },
+        "unit": {
+          "name": "Enhet",
+          "description": "months (måneder) eller years (år)."
+        },
+        "dates": {
+          "name": "Datoer",
+          "description": "Faste datoer som MM-DD, f.eks. 04-01, 10-01."
+        },
+        "due_soon_days": {
+          "name": "Dager varsel",
+          "description": "Dager varsel"
+        }
+      }
+    },
+    "update_task": {
+      "name": "Endre gjøremål",
+      "description": "Endre et gjøremål. Kun admin.",
+      "fields": {
+        "entity_id": {
+          "name": "Gjøremålsentitet",
+          "description": "Gjøremålets sensor eller knapp."
+        },
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "task_id": {
+          "name": "Gjøremåls-ID",
+          "description": "Brukes sammen med config_entry_id i stedet for entity_id."
+        },
+        "title": {
+          "name": "Tittel",
+          "description": "Tittel"
+        },
+        "description": {
+          "name": "Beskrivelse",
+          "description": "Beskrivelse"
+        },
+        "category": {
+          "name": "Kategori",
+          "description": "Kategori"
+        },
+        "schedule_type": {
+          "name": "Type plan",
+          "description": "fixed (fast) eller interval."
+        },
+        "every": {
+          "name": "Hver",
+          "description": "Intervallets lengde."
+        },
+        "unit": {
+          "name": "Enhet",
+          "description": "months (måneder) eller years (år)."
+        },
+        "dates": {
+          "name": "Datoer",
+          "description": "Faste datoer som MM-DD, f.eks. 04-01, 10-01."
+        },
+        "due_soon_days": {
+          "name": "Dager varsel",
+          "description": "Dager varsel"
+        },
+        "last_completed": {
+          "name": "Sist utført",
+          "description": "Beregner neste frist på nytt."
+        },
+        "next_due": {
+          "name": "Neste frist",
+          "description": "Sett neste frist direkte."
+        }
+      }
+    },
+    "remove_task": {
+      "name": "Fjern gjøremål",
+      "description": "Arkiver et gjøremål (historikken beholdes). Kun admin.",
+      "fields": {
+        "entity_id": {
+          "name": "Gjøremålsentitet",
+          "description": "Gjøremålets sensor eller knapp."
+        },
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "task_id": {
+          "name": "Gjøremåls-ID",
+          "description": "Brukes sammen med config_entry_id i stedet for entity_id."
+        }
+      }
+    },
+    "restore_task": {
+      "name": "Gjenopprett gjøremål",
+      "description": "Gjenopprett et arkivert gjøremål. Kun admin.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Bolig",
+          "description": "Konfigurasjons-ID for boligen."
+        },
+        "task_id": {
+          "name": "Gjøremåls-ID",
+          "description": "Brukes sammen med config_entry_id i stedet for entity_id."
+        }
+      }
+    }
+  }
+}

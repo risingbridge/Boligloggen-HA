@@ -1,0 +1,458 @@
+{
+  "profile": "house_1985",
+  "today": "2026-11-22",
+  "tasks": [
+    {
+      "key": "smoke_alarm_check",
+      "title": "Test røykvarslere og bytt batteri",
+      "category": "safety",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 12,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2026-12-01"
+    },
+    {
+      "key": "fire_extinguisher_check",
+      "title": "Kontroller brannslukker og brannteppe",
+      "category": "safety",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 12,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2026-12-01"
+    },
+    {
+      "key": "rcd_test",
+      "title": "Test jordfeilbryter",
+      "category": "safety",
+      "schedule": {
+        "type": "interval",
+        "every": 6,
+        "unit": "months"
+      },
+      "due_soon_days": 14,
+      "next_due": "2027-05-22"
+    },
+    {
+      "key": "water_leak_check",
+      "title": "Sjekk for vannlekkasjer og test stoppekran",
+      "category": "safety",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "clean_drains#1",
+      "title": "Rens sluk – bad 1",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "clean_drains#2",
+      "title": "Rens sluk – bad 2",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "wet_room_sealant_check#1",
+      "title": "Sjekk fuger og silikon i våtrom – bad 1",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "wet_room_sealant_check#2",
+      "title": "Sjekk fuger og silikon i våtrom – bad 2",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "kitchen_hood_filter",
+      "title": "Rens filter i kjøkkenvifte",
+      "category": "indoor",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "dishwasher_filter",
+      "title": "Rens filter i oppvaskmaskin",
+      "category": "indoor",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "months"
+      },
+      "due_soon_days": 3,
+      "next_due": "2026-12-22"
+    },
+    {
+      "key": "window_washing",
+      "title": "Vask vinduer",
+      "category": "seasonal",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 4,
+            "day": 15
+          },
+          {
+            "month": 9,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2027-04-15"
+    },
+    {
+      "key": "windows_doors_check",
+      "title": "Sjekk vinduer og dører (tetningslister, hengsler)",
+      "category": "exterior",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 9,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-09-01"
+    },
+    {
+      "key": "electrical_inspection",
+      "title": "El-kontroll av det elektriske anlegget",
+      "category": "safety",
+      "schedule": {
+        "type": "interval",
+        "every": 5,
+        "unit": "years"
+      },
+      "due_soon_days": 60,
+      "next_due": "2031-11-22"
+    },
+    {
+      "key": "water_heater_assessment",
+      "title": "Vurder varmtvannsbereder",
+      "category": "indoor",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "chimney_stove_inspection",
+      "title": "Sjekk ildsted og pipe",
+      "category": "heating",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "stove_gasket_check",
+      "title": "Sjekk pakninger og glass på vedovn",
+      "category": "heating",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 9,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-09-15"
+    },
+    {
+      "key": "heat_pump_filter",
+      "title": "Rens filter i varmepumpe",
+      "category": "heating",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "heat_pump_outdoor_rinse",
+      "title": "Spyl utedelen på varmepumpa",
+      "category": "heating",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 5,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-05-01"
+    },
+    {
+      "key": "heat_pump_condensate_drain",
+      "title": "Sjekk kondensavløp på varmepumpa",
+      "category": "heating",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 10,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-10-01"
+    },
+    {
+      "key": "natural_vents_check",
+      "title": "Sjekk at luftventiler er åpne og rene",
+      "category": "ventilation",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "paint_wood_cladding",
+      "title": "Mal/beis kledning",
+      "category": "exterior",
+      "schedule": {
+        "type": "interval",
+        "every": 7,
+        "unit": "years"
+      },
+      "due_soon_days": 90,
+      "next_due": "2033-11-22"
+    },
+    {
+      "key": "wood_cladding_inspection",
+      "title": "Inspiser trekledning",
+      "category": "exterior",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 5,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-05-01"
+    },
+    {
+      "key": "clean_gutters",
+      "title": "Rens takrenner og nedløp",
+      "category": "exterior",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 10,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-10-15"
+    },
+    {
+      "key": "roof_inspection",
+      "title": "Inspiser tak og beslag",
+      "category": "exterior",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "drainage_check",
+      "title": "Sjekk drenering og fukt i grunnmur",
+      "category": "exterior",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 4,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-04-15"
+    },
+    {
+      "key": "outdoor_tap_winterize",
+      "title": "Frostsikre utekran og hageslange",
+      "category": "seasonal",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 10,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-10-01"
+    },
+    {
+      "key": "leaf_raking",
+      "title": "Rak løv",
+      "category": "outdoor",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 10,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-10-01"
+    },
+    {
+      "key": "garden_spring_cleanup",
+      "title": "Vårrydding i hagen",
+      "category": "outdoor",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 4,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-04-15"
+    },
+    {
+      "key": "pavers_weeds_sand",
+      "title": "Fjern ugress og etterfyll fugesand",
+      "category": "outdoor",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 5,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-05-15"
+    },
+    {
+      "key": "wood_deck_oil",
+      "title": "Rens og olje terrassen",
+      "category": "outdoor",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 6,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-06-01"
+    },
+    {
+      "key": "garage_door_service",
+      "title": "Smør garasjeport og sjekk fotocelle",
+      "category": "outdoor",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "garage_roof_gutters",
+      "title": "Sjekk tak og takrenner på garasje/carport",
+      "category": "outdoor",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 10,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-10-15"
+    }
+  ]
+}

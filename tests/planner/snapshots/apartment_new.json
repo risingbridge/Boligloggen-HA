@@ -1,0 +1,170 @@
+{
+  "profile": "apartment_new",
+  "today": "2026-11-22",
+  "tasks": [
+    {
+      "key": "smoke_alarm_check",
+      "title": "Test røykvarslere og bytt batteri",
+      "category": "safety",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 12,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2026-12-01"
+    },
+    {
+      "key": "fire_extinguisher_check",
+      "title": "Kontroller brannslukker og brannteppe",
+      "category": "safety",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 12,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2026-12-01"
+    },
+    {
+      "key": "rcd_test",
+      "title": "Test jordfeilbryter",
+      "category": "safety",
+      "schedule": {
+        "type": "interval",
+        "every": 6,
+        "unit": "months"
+      },
+      "due_soon_days": 14,
+      "next_due": "2027-05-22"
+    },
+    {
+      "key": "water_leak_check",
+      "title": "Sjekk for vannlekkasjer og test stoppekran",
+      "category": "safety",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "clean_drains#1",
+      "title": "Rens sluk – bad 1",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "wet_room_sealant_check#1",
+      "title": "Sjekk fuger og silikon i våtrom – bad 1",
+      "category": "wet_room",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    },
+    {
+      "key": "kitchen_hood_filter",
+      "title": "Rens filter i kjøkkenvifte",
+      "category": "indoor",
+      "schedule": {
+        "type": "interval",
+        "every": 3,
+        "unit": "months"
+      },
+      "due_soon_days": 7,
+      "next_due": "2027-02-22"
+    },
+    {
+      "key": "dishwasher_filter",
+      "title": "Rens filter i oppvaskmaskin",
+      "category": "indoor",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "months"
+      },
+      "due_soon_days": 3,
+      "next_due": "2026-12-22"
+    },
+    {
+      "key": "window_washing",
+      "title": "Vask vinduer",
+      "category": "seasonal",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 4,
+            "day": 15
+          },
+          {
+            "month": 9,
+            "day": 15
+          }
+        ]
+      },
+      "due_soon_days": 14,
+      "next_due": "2027-04-15"
+    },
+    {
+      "key": "windows_doors_check",
+      "title": "Sjekk vinduer og dører (tetningslister, hengsler)",
+      "category": "exterior",
+      "schedule": {
+        "type": "fixed",
+        "dates": [
+          {
+            "month": 9,
+            "day": 1
+          }
+        ]
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-09-01"
+    },
+    {
+      "key": "ventilation_filter_change",
+      "title": "Bytt filter i ventilasjonsaggregatet",
+      "category": "ventilation",
+      "schedule": {
+        "type": "interval",
+        "every": 6,
+        "unit": "months"
+      },
+      "due_soon_days": 14,
+      "next_due": "2027-05-22"
+    },
+    {
+      "key": "ventilation_valves_clean",
+      "title": "Rens ventiler og varmegjenvinner",
+      "category": "ventilation",
+      "schedule": {
+        "type": "interval",
+        "every": 1,
+        "unit": "years"
+      },
+      "due_soon_days": 21,
+      "next_due": "2027-11-22"
+    }
+  ]
+}
