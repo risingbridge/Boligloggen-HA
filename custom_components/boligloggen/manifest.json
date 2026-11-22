@@ -1,14 +1,20 @@
 {
   "domain": "boligloggen",
   "name": "Boligloggen",
-  "codeowners": [],
+  "after_dependencies": [
+    "logbook"
+  ],
+  "codeowners": [
+    "@risingbridge"
+  ],
   "config_flow": true,
-  "dependencies": ["websocket_api"],
-  "after_dependencies": ["logbook"],
-  "documentation": "http://gitea.internal/hrisebro/Boligloggen-HomeAssistant",
+  "dependencies": [
+    "websocket_api"
+  ],
+  "documentation": "https://github.com/risingbridge/Boligloggen-HA",
   "integration_type": "service",
   "iot_class": "calculated",
-  "issue_tracker": "http://gitea.internal/hrisebro/Boligloggen-HomeAssistant/issues",
+  "issue_tracker": "https://github.com/risingbridge/Boligloggen-HA/issues",
   "requirements": [],
   "version": "0.1.0"
 }

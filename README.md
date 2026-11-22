@@ -17,7 +17,8 @@ your Home Assistant instance.
 
 ### HACS (custom repository)
 
-1. HACS → ⋮ → *Custom repositories* → add this repository's URL, category **Integration**.
+1. HACS → ⋮ → *Custom repositories* → add `https://github.com/risingbridge/Boligloggen-HA`,
+   category **Integration**.
 2. Install **Boligloggen** and restart Home Assistant.
 3. *Settings → Devices & services → Add integration → Boligloggen*.
 
@@ -147,7 +148,8 @@ state stored with each task, so a restart never fires an event twice.
 ### Blueprint
 
 Import [`blueprints/automation/boligloggen/notify_due.yaml`](blueprints/automation/boligloggen/notify_due.yaml)
-(*Settings → Automations → Blueprints → Import*). Choose a property, a notify action
+(*Settings → Automations → Blueprints → Import*, URL:
+`https://github.com/risingbridge/Boligloggen-HA/blob/main/blueprints/automation/boligloggen/notify_due.yaml`). Choose a property, a notify action
 (e.g. `notify.mobile_app_phone`) and which events to send: due soon, overdue, or completed by
 someone else.
 
